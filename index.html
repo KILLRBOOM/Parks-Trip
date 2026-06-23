@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2026 National Parks Road Trip</title>
+  <style>
+    :root {
+      --bg: #f4efe7;
+      --card: #ffffff;
+      --ink: #1f2933;
+      --muted: #667085;
+      --accent: #b45309;
+      --accent2: #0f766e;
+      --border: #eadfce;
+      --shadow: 0 10px 28px rgba(31, 41, 51, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg, #fff8ed 0%, var(--bg) 42%, #edf7f5 100%);
+      color: var(--ink);
+      line-height: 1.4;
+    }
+    header {
+      padding: 28px 18px 18px;
+      background: linear-gradient(135deg, #92400e, #0f766e);
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      box-shadow: 0 6px 18px rgba(0,0,0,.18);
+    }
+    h1 { margin: 0 0 6px; font-size: 1.55rem; }
+    .subtitle { margin: 0; opacity: .92; font-size: .95rem; }
+    main { max-width: 920px; margin: 0 auto; padding: 16px; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 0 0 16px;
+    }
+    .stat {
+      background: rgba(255,255,255,.86);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 10px;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,.06);
+    }
+    .stat strong { display: block; font-size: 1.15rem; color: var(--accent); }
+    .stat span { font-size: .78rem; color: var(--muted); }
+    .toolbar {
+      display: flex;
+      gap: 10px;
+      margin: 14px 0 18px;
+      position: sticky;
+      top: 92px;
+      z-index: 2;
+    }
+    input {
+      flex: 1;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 16px;
+      box-shadow: 0 3px 10px rgba(0,0,0,.04);
+    }
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: var(--accent2);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .day-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      margin: 0 0 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .day-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      padding: 15px 16px;
+      background: #fff7ed;
+      border-bottom: 1px solid var(--border);
+    }
+    .day-title { font-weight: 800; font-size: 1.05rem; }
+    .date { color: var(--muted); font-size: .9rem; white-space: nowrap; }
+    .stop { padding: 14px 16px; border-bottom: 1px solid #f0e6d7; }
+    .stop:last-child { border-bottom: 0; }
+    .place { font-size: 1.06rem; font-weight: 800; margin-bottom: 6px; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: #374151;
+      font-size: .82rem;
+      font-weight: 650;
+    }
+    .hotel { background: #ecfdf5; color: #065f46; }
+    .todo { background: #fff7ed; color: #9a3412; }
+    a.map {
+      display: inline-block;
+      margin-top: 2px;
+      color: var(--accent2);
+      text-decoration: none;
+      font-weight: 800;
+    }
+    details {
+      margin: 16px 0;
+      background: rgba(255,255,255,.82);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 14px;
+    }
+    summary { font-weight: 800; cursor: pointer; }
+    .hidden { display: none; }
+    footer { text-align: center; color: var(--muted); padding: 22px 0 36px; font-size: .86rem; }
+    @media (max-width: 560px) {
+      header { padding-top: 22px; }
+      h1 { font-size: 1.25rem; }
+      .stats { grid-template-columns: 1fr 1fr; }
+      .stat:last-child { grid-column: span 2; }
+      .toolbar { top: 82px; }
+      .day-head { align-items: flex-start; flex-direction: column; }
+      .date { white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>2026 National Parks Road Trip</h1>
+    <p class="subtitle">September 19 – October 3, 2026 · Texas, Colorado, Utah, Nevada, Arizona, New Mexico</p>
+  </header>
+  <main>
+    <section class="stats" id="stats"></section>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search stops, hotels, parks..." />
+      <button onclick="window.print()">Print</button>
+    </div>
+    <details>
+      <summary>Trip notes</summary>
+      <p>Hotel entries marked TBD still need confirmation. Tap any “Open map” link to search that stop in Google Maps.</p>
+    </details>
+    <section id="itinerary"></section>
+    <footer>Built as a single-file web app. Save as <strong>index.html</strong> and publish with GitHub Pages.</footer>
+  </main>
+  <script>
+    const stops = [
+      {day:1,date:'9/19/2026',place:'Conroe, TX → Dalhart Holiday Inn',location:'12012 Highway 87 South, Dalhart, TX 79022',miles:650,hours:'9:43',hotel:'Dalhart - Holiday Inn'},
+      {day:2,date:'9/20/2026',place:'Breck',location:'245 River Park Dr, Breckenridge, CO 80424',miles:372,hours:'6:04',hotel:"Michele's Bed and Breakfast"},
+      {day:3,date:'9/21/2026',place:'Breck',location:'245 River Park Dr, Breckenridge, CO 80424',miles:0,hours:'0:00',hotel:"Michele's Bed and Breakfast"},
+      {day:4,date:'9/22/2026',place:'Moab',location:'1421 S Hwy 191, Moab, UT 84532',miles:291,hours:'4:29',hotel:'Moab - Voco IHG'},
+      {day:5,date:'9/23/2026',place:'Arches National Park',location:'Arches National Park, UT',miles:3,hours:'0:06',hotel:'Moab - Voco IHG'},
+      {day:5,date:'9/23/2026',place:'Potash Road',location:'Potash Road, Moab, UT',miles:16,hours:'0:16',hotel:''},
+      {day:6,date:'9/24/2026',place:'Canyonlands National Park',location:'Canyonlands National Park, UT',miles:43,hours:'0:43',hotel:'Moab - Voco IHG'},
+      {day:7,date:'9/25/2026',place:'Goblin Valley State Park',location:'Goblin Valley State Park, UT',miles:111,hours:'1:51',hotel:''},
+      {day:7,date:'9/25/2026',place:'Capitol Reef National Park',location:'Capitol Reef National Park, UT',miles:60,hours:'1:03',hotel:''},
+      {day:7,date:'9/25/2026',place:'Cedar City',location:'Cedar City, UT',miles:177,hours:'3:04',hotel:'TBD'},
+      {day:8,date:'9/26/2026',place:'Bryce Canyon National Park',location:'Bryce Canyon National Park, UT',miles:83,hours:'1:39',hotel:'TBD'},
+      {day:9,date:'9/27/2026',place:'Zion National Park',location:'Zion National Park, UT',miles:73,hours:'1:24',hotel:''},
+      {day:9,date:'9/27/2026',place:'Valley of Fire State Park',location:'Valley of Fire State Park, NV',miles:151,hours:'2:52',hotel:''},
+      {day:9,date:'9/27/2026',place:'Venetian - Las Vegas',location:'The Venetian Resort Las Vegas, Las Vegas, NV',miles:60,hours:'1:12',hotel:'Las Vegas - Venetian'},
+      {day:10,date:'9/28/2026',place:'Venetian - Las Vegas',location:'The Venetian Resort Las Vegas, Las Vegas, NV',miles:0,hours:'0:00',hotel:'Las Vegas - Venetian'},
+      {day:11,date:'9/29/2026',place:'Diamond Creek Turn Rd',location:'Diamond Creek Road, Peach Springs, AZ',miles:161,hours:'2:36',hotel:''},
+      {day:11,date:'9/29/2026',place:'Diamond Creek Beach',location:'Diamond Creek Beach, Peach Springs, AZ',miles:20,hours:'1:30',hotel:''},
+      {day:11,date:'9/29/2026',place:'Diamond Creek Turn Rd',location:'Diamond Creek Road, Peach Springs, AZ',miles:20,hours:'1:30',hotel:''},
+      {day:11,date:'9/29/2026',place:'Grand Canyon Village',location:'Grand Canyon Village, AZ',miles:139,hours:'2:17',hotel:'Yavapai'},
+      {day:12,date:'9/30/2026',place:'Grand Canyon Village',location:'Grand Canyon Village, AZ',miles:0,hours:'0:00',hotel:'Yavapai'},
+      {day:13,date:'10/1/2026',place:'Petrified Forest National Park',location:'Petrified Forest National Park, AZ',miles:203,hours:'3:05',hotel:'TBD'},
+      {day:13,date:'10/1/2026',place:'White Sands',location:'White Sands National Park, NM',miles:410,hours:'6:06',hotel:''},
+      {day:14,date:'10/2/2026',place:'Carlsbad Caverns',location:'Carlsbad Caverns National Park, NM',miles:181,hours:'3:12',hotel:'TBD'},
+      {day:15,date:'10/3/2026',place:'Conroe, TX',location:'Conroe, TX',miles:683,hours:'10:00',hotel:''}
+    ];
+
+    function minutes(hhmm){ const [h,m]=hhmm.split(':').map(Number); return h*60+m; }
+    function fmtMinutes(total){ return `${Math.floor(total/60)} hr ${total%60} min`; }
+    function mapUrl(stop){ return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(stop.location || stop.place)}`; }
+
+    const totalMiles = stops.reduce((s,x)=>s+x.miles,0);
+    const totalMinutes = stops.reduce((s,x)=>s+minutes(x.hours),0);
+    const hotelTBD = stops.filter(x=>x.hotel==='TBD').length;
+    document.getElementById('stats').innerHTML = `
+      <div class="stat"><strong>${totalMiles.toLocaleString()}</strong><span>Total miles</span></div>
+      <div class="stat"><strong>${fmtMinutes(totalMinutes)}</strong><span>Total drive time</span></div>
+      <div class="stat"><strong>${hotelTBD}</strong><span>TBD hotel stops</span></div>`;
+
+    const grouped = stops.reduce((acc, stop) => {
+      const key = `${stop.day}|${stop.date}`;
+      acc[key] ||= [];
+      acc[key].push(stop);
+      return acc;
+    }, {});
+
+    function render(filter='') {
+      const q = filter.toLowerCase();
+      const html = Object.entries(grouped).map(([key, items]) => {
+        const [day,date] = key.split('|');
+        const visible = items.filter(x => `${x.place} ${x.location} ${x.hotel} ${x.date}`.toLowerCase().includes(q));
+        if (!visible.length) return '';
+        const dayMiles = items.reduce((s,x)=>s+x.miles,0);
+        const dayMinutes = items.reduce((s,x)=>s+minutes(x.hours),0);
+        return `<article class="day-card">
+          <div class="day-head">
+            <div class="day-title">Day ${day}</div>
+            <div class="date">${date} · ${dayMiles} mi · ${fmtMinutes(dayMinutes)}</div>
+          </div>
+          ${visible.map(stop => `<div class="stop">
+            <div class="place">${stop.place}</div>
+            ${stop.location && stop.location !== stop.place ? `<div class="address">📍 ${stop.location}</div>` : ``}
+            <div class="meta">
+              <span class="pill">🚗 ${stop.miles} mi</span>
+              <span class="pill">⏱ ${stop.hours}</span>
+              ${stop.hotel ? `<span class="pill ${stop.hotel==='TBD'?'todo':'hotel'}">🏨 ${stop.hotel}</span>` : ''}
+            </div>
+            <a class="map" target="_blank" rel="noopener" href="${mapUrl(stop)}">Open map →</a>
+          </div>`).join('')}
+        </article>`;
+      }).join('');
+      document.getElementById('itinerary').innerHTML = html || '<p>No stops match your search.</p>';
+    }
+    render();
+    document.getElementById('search').addEventListener('input', e => render(e.target.value));
+  </script>
+</body>
+</html>
