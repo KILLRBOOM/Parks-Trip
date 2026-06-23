@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Road Trip" />
+  <title>National Parks Road Trip</title>
+  <style>
+    :root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#667085;--blue:#1769ff;--green:#178a57;--orange:#c76a00;--border:#e5e7ef;--shadow:0 10px 30px rgba(15,23,42,.08)}
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);padding-bottom:90px}.hero{background:linear-gradient(135deg,#13294b,#1769ff);color:#fff;padding:calc(22px + env(safe-area-inset-top)) 18px 24px;border-bottom-left-radius:28px;border-bottom-right-radius:28px;box-shadow:var(--shadow)}.hero h1{font-size:28px;line-height:1.05;margin:8px 0 8px}.hero p{margin:0;color:rgba(255,255,255,.85);font-size:15px}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px}.stat{background:var(--card);border-radius:20px;padding:15px;box-shadow:var(--shadow)}.stat b{display:block;font-size:25px}.stat span{color:var(--muted);font-size:13px}.tabs{position:sticky;top:0;z-index:2;background:rgba(245,247,251,.92);backdrop-filter:blur(12px);display:flex;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border)}button{font:inherit}.tab{border:0;border-radius:999px;padding:10px 13px;background:#e9eef8;color:#344054;font-weight:700}.tab.active{background:var(--blue);color:#fff}.wrap{padding:4px 14px}.day{background:var(--card);border:1px solid var(--border);border-radius:22px;margin:12px 0;padding:15px;box-shadow:0 5px 18px rgba(15,23,42,.05)}.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.badge{background:#edf4ff;color:#155eef;border-radius:999px;padding:6px 10px;font-size:13px;font-weight:800;white-space:nowrap}.date{color:var(--muted);font-size:13px;font-weight:700}.place{font-size:20px;font-weight:850;margin:5px 0}.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}.pill{border-radius:999px;background:#f2f4f7;padding:7px 10px;font-size:14px;color:#344054}.hotel{margin-top:12px;border-left:4px solid var(--green);background:#f0fdf4;padding:10px 12px;border-radius:12px;color:#14532d;font-weight:700}.tbd{border-left-color:var(--orange);background:#fff7ed;color:#7c2d12}.emptyHotel{border-left-color:#98a2b3;background:#f8fafc;color:#667085}.sectionTitle{font-size:20px;margin:18px 4px 8px}.search{width:100%;border:1px solid var(--border);border-radius:16px;padding:13px 14px;font-size:16px;background:white;margin:12px 0 4px}.list{display:none}.list.active{display:block}.hotelRow{display:flex;justify-content:space-between;gap:12px;background:#fff;border:1px solid var(--border);border-radius:16px;padding:13px;margin:10px 0}.hotelRow div:first-child{font-weight:800}.hotelRow div:last-child{color:var(--muted);text-align:right}.nav{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.94);backdrop-filter:blur(14px);border-top:1px solid var(--border);display:grid;grid-template-columns:repeat(3,1fr);padding:8px 8px calc(8px + env(safe-area-inset-bottom));z-index:5}.nav button{border:0;background:transparent;border-radius:16px;padding:9px 4px;color:#667085;font-weight:800}.nav button.active{background:#edf4ff;color:#155eef}.note{color:var(--muted);font-size:14px;line-height:1.4;margin:10px 4px 18px}.check{background:#fff;border:1px solid var(--border);border-radius:18px;padding:14px;margin:10px 0;display:flex;align-items:center;gap:12px;font-weight:800}.check input{width:23px;height:23px}@media(min-width:760px){.wrap,.stats{max-width:760px;margin-left:auto;margin-right:auto}.hero{max-width:900px;margin:0 auto;border-radius:0 0 28px 28px}.stats{grid-template-columns:repeat(4,1fr)}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <p>Sept. 19 – Oct. 3, 2026</p>
+    <h1>National Parks Road Trip</h1>
+    <p>Texas • Colorado • Utah • Nevada • Arizona • New Mexico</p>
+  </header>
+  <section class="stats">
+    <div class="stat"><b id="totalMiles">0</b><span>Total miles</span></div>
+    <div class="stat"><b id="totalHours">0</b><span>Drive time</span></div>
+    <div class="stat"><b>15</b><span>Trip days</span></div>
+    <div class="stat"><b>8</b><span>Park stops</span></div>
+  </section>
+  <div class="tabs"><button class="tab active" onclick="show('itinerary',this)">Itinerary</button><button class="tab" onclick="show('hotels',this)">Hotels</button><button class="tab" onclick="show('parks',this)">Parks</button></div>
+  <main class="wrap">
+    <section id="itinerary" class="list active"><input class="search" id="search" placeholder="Search stops or hotels..." oninput="render()"/><div id="cards"></div></section>
+    <section id="hotels" class="list"><h2 class="sectionTitle">Hotel Plan</h2><div id="hotelsList"></div><p class="note">TBD hotel nights are highlighted so they are easy to update later.</p></section>
+    <section id="parks" class="list"><h2 class="sectionTitle">Park Checklist</h2><div id="parksList"></div></section>
+  </main>
+  <nav class="nav"><button class="active" onclick="show('itinerary',this)">Route</button><button onclick="show('hotels',this)">Hotels</button><button onclick="show('parks',this)">Checklist</button></nav>
+<script>
+const stops=[
+{d:1,date:'9/19/2026',place:'Dalhart',m:650,t:'9:43',h:'Dalhart - Holiday Inn'},
+{d:2,date:'9/20/2026',place:'Breck',m:372,t:'6:04',h:"Michele's Bed and Breakfast"},
+{d:3,date:'9/21/2026',place:'Breck',m:0,t:'0:00',h:"Michele's Bed and Breakfast"},
+{d:4,date:'9/22/2026',place:'Moab',m:291,t:'4:29',h:'Moab - Voco IHG'},
+{d:5,date:'9/23/2026',place:'Arches National Park',m:3,t:'0:06',h:'Moab - Voco IHG'},
+{d:5,date:'9/23/2026',place:'Potash Road',m:16,t:'0:16',h:''},
+{d:6,date:'9/24/2026',place:'Canyonlands National Park',m:43,t:'0:43',h:'Moab - Voco IHG'},
+{d:7,date:'9/25/2026',place:'Goblin Valley State Park',m:111,t:'1:51',h:''},
+{d:7,date:'9/25/2026',place:'Capitol Reef National Park',m:60,t:'1:03',h:''},
+{d:7,date:'9/25/2026',place:'Cedar City',m:177,t:'3:04',h:'TBD'},
+{d:8,date:'9/26/2026',place:'Bryce Canyon National Park',m:83,t:'1:39',h:'TBD'},
+{d:9,date:'9/27/2026',place:'Zion National Park',m:73,t:'1:24',h:''},
+{d:9,date:'9/27/2026',place:'Valley of Fire State Park',m:151,t:'2:52',h:''},
+{d:9,date:'9/27/2026',place:'Venetian - Las Vegas',m:60,t:'1:12',h:'Las Vegas - Venetian'},
+{d:10,date:'9/28/2026',place:'Venetian - Las Vegas',m:0,t:'0:00',h:'Las Vegas - Venetian'},
+{d:11,date:'9/29/2026',place:'Diamond Creek Turn Rd',m:161,t:'2:36',h:''},
+{d:11,date:'9/29/2026',place:'Diamond Creek Beach',m:20,t:'1:30',h:''},
+{d:11,date:'9/29/2026',place:'Diamond Creek Turn Rd',m:20,t:'1:30',h:''},
+{d:11,date:'9/29/2026',place:'Grand Canyon Village',m:139,t:'2:17',h:'Yavapai'},
+{d:12,date:'9/30/2026',place:'Grand Canyon Village',m:0,t:'0:00',h:'Yavapai'},
+{d:13,date:'10/1/2026',place:'Petrified Forest National Park',m:203,t:'3:05',h:'TBD'},
+{d:13,date:'10/1/2026',place:'White Sands',m:410,t:'6:06',h:''},
+{d:14,date:'10/2/2026',place:'Carlsbad Caverns',m:181,t:'3:12',h:'TBD'},
+{d:15,date:'10/3/2026',place:'Home',m:683,t:'10:00',h:''}
+];
+function mins(t){let [h,m]=t.split(':').map(Number);return h*60+m}function fmt(min){return Math.floor(min/60)+' hr '+String(min%60).padStart(2,'0')+' min'}
+document.getElementById('totalMiles').textContent=stops.reduce((a,s)=>a+s.m,0).toLocaleString();document.getElementById('totalHours').textContent=fmt(stops.reduce((a,s)=>a+mins(s.t),0));
+function render(){let q=(document.getElementById('search')?.value||'').toLowerCase();let html='';stops.filter(s=>(s.place+s.h+s.date).toLowerCase().includes(q)).forEach(s=>{let hc=s.h? (s.h==='TBD'?'hotel tbd':'hotel'):'hotel emptyHotel';let ht=s.h||'No hotel listed for this stop';html+=`<article class="day"><div class="top"><div><div class="date">${s.date}</div><div class="place">${s.place}</div></div><div class="badge">Day ${s.d}</div></div><div class="meta"><span class="pill">${s.m} miles</span><span class="pill">${s.t} drive</span></div><div class="${hc}">🏨 ${ht}</div></article>`});document.getElementById('cards').innerHTML=html}
+function renderHotels(){let seen=new Set(),html='';stops.filter(s=>s.h).forEach(s=>{let key=s.date+s.h;if(seen.has(key))return;seen.add(key);html+=`<div class="hotelRow"><div>${s.date}<br>${s.h}</div><div>Day ${s.d}<br>${s.place}</div></div>`});document.getElementById('hotelsList').innerHTML=html}
+function renderParks(){let parks=['Arches National Park','Canyonlands National Park','Goblin Valley State Park','Capitol Reef National Park','Bryce Canyon National Park','Zion National Park','Valley of Fire State Park','Grand Canyon Village','Petrified Forest National Park','White Sands','Carlsbad Caverns'];document.getElementById('parksList').innerHTML=parks.map(p=>`<label class="check"><input type="checkbox"> ${p}</label>`).join('')}
+function show(id,btn){document.querySelectorAll('.list').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tab,.nav button').forEach(x=>x.classList.remove('active'));document.querySelectorAll(`button`).forEach(x=>{if(x.textContent.includes(id==='itinerary'?'Itinerary':id==='hotels'?'Hotels':'Parks')||x.textContent.includes(id==='itinerary'?'Route':id==='parks'?'Checklist':'Hotels'))x.classList.add('active')});window.scrollTo({top:0,behavior:'smooth'})}
+render();renderHotels();renderParks();
+</script>
+</body>
+</html>
